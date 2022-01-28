@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springbootprovider.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.example.pojo.Book">
+        <result column="bookId" property="bookId" />
+        <result column="bookname" property="bookname" />
+        <result column="author" property="author" />
+        <result column="type" property="type" />
+        <result column="press" property="press" />
+        <result column="publicationTime" property="publicationTime" />
+        <result column="ISBN" property="ISBN" />
+        <result column="stock" property="stock" />
+    </resultMap>
+
+    <parameterMap id="Book" type="com.example.pojo.Book"/>
+
+    <sql id="Base_Column_List">
+        bookId, bookname, author, type, press, publicationTime, ISBN, stock
+    </sql>
+
+    <select id="findBookByBookId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from tb_books
+        where bookId = #{bookId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAllBook" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_books
+    </select>
+
+    <insert id="addBook" parameterType="com.example.pojo.Book">
+        insert into tb_books (bookname, author, type, press, publicationTime, ISBN, stock)
+        values (#{book.bookname,jdbcType=INTEGER},#{book.author,jdbcType=INTEGER},
+                #{book.type,jdbcType=INTEGER},#{book.press,jdbcType=INTEGER},#{book.publicationTime,jdbcType=INTEGER},
+                #{book.ISBN,jdbcType=INTEGER},#{book.stock,jdbcType=INTEGER})
+    </insert>
+
+    <delete id="deleteBook" parameterType="java.lang.Integer">
+        delete from tb_books
+        where bookId =  #{bookId,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateStock" parameterType="java.lang.Integer">
+        update tb_books
+        set stock = #{stock,jdbcType=INTEGER}
+        where bookId = #{bookId,jdbcType=INTEGER}
+    </update>
+
+</mapper>
