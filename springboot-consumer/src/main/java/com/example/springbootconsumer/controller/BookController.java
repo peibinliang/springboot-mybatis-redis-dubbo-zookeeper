@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/book")
-public class UserController {
+public class BookController {
     @DubboReference
     private BookService bookService;
 
